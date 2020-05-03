@@ -8,6 +8,7 @@ class Generation{
 
 		this.matingpool = new Array();
 		this.newGen = new Array(n);
+		this.reachedCount = 0;
 
 	}
 
@@ -20,9 +21,12 @@ class Generation{
 			if(this.rockets[i].fitness > maxfitness){
 				maxfitness = this.rockets[i].fitness;
 			}
+			if(this.rockets[i].reached) this.reachedCount++;
 		}
 
 		global_max_fitness = round(maxfitness, 3);
+		global_reachedCount = this.reachedCount;
+		this.reachedCount = 0;
 
 		for(var i = 0; i < n; i++){
 			this.rockets[i].fitness /= maxfitness;

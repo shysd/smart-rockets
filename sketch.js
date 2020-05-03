@@ -10,6 +10,7 @@ var gen;
 var count;
 var gencount = 1;
 var global_max_fitness = 0;
+var global_reachedCount = 0;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -43,6 +44,7 @@ function draw() {
 	textSize(24);
 	text(genstr, 10, 30);
 	text('Max fitness: ' + String(global_max_fitness), 10, 60);
+	text('Reached: ' + String(global_reachedCount) + '/' + String(n), 10, 90);
 }
 
 
