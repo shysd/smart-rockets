@@ -13,8 +13,10 @@ var global_max_fitness = 0;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	goal = createVector(4*width/6, 150);
-	obstacle = createVector(2*width/3, height/2);
+
+	goal = createVector(int(random(1, 8))*width/8, int(random(100, 200)));
+	obstacle = createVector(int(random(1, 8))*width/8, int(random(1, 4))*height/4);
+
 	count = 0;
 	fill(251);
 	rectMode(CENTER);
