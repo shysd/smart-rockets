@@ -1,10 +1,13 @@
-// var rockets;
+// number of rockets
 var n = 100;
+// goal 
 var goalsize = 100;
 var goal;
+// obstacle
 var obstaclesize = 250;
 var obstacle;
 var obstacleCreated = false;
+// Lifespan of rockets - number of frames
 var lifespan = 200;
 var gen;
 var count;
@@ -14,17 +17,18 @@ var global_reachedCount = 0;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
+	//create random vectors for goal and obstacle positions
 	goal = createVector(int(random(1, 8))*width/8, int(random(100, 200)));
 	obstacle = createVector(int(random(1, 8))*width/8, int(random(1, 4))*height/4);
 
 	count = 0;
 	fill(251);
 	rectMode(CENTER);
+	// start a new Generation
 	gen = new Generation(1);
 	
 }
-
+//--------------------------Looping function-----------------------
 function draw() {
 	background(51);
 	createGoal();
@@ -33,8 +37,11 @@ function draw() {
 	gen.show();
 
 	count++;
+	// if frames reach the lifespan start the new generation
 	if(count == lifespan){
+		// calculate fitness and create matingpool
 		gen.update();
+		// Natural selection
 		gen.selection();
 		count = 0;
 		gencount++;
