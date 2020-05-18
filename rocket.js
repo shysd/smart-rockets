@@ -45,7 +45,7 @@ class Rocket{
 
 		// boundary condtions
 		// die if reach boundary
-		if(this.pos.x >= width-this.width || this.pos.x <= this.width/2 || this.pos.y >= height-this.height || this.pos.y <= this.height/2){
+		if(this.pos.x >= width-this.width/2 || this.pos.x <= this.width/2 || this.pos.y >= height-this.height || this.pos.y <= this.height/2){
 
 			this.alive = false;	
 			this.hitwall = true;
