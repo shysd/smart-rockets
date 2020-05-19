@@ -16,12 +16,13 @@
 
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <!-- <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css"> -->
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <!-- JavaScript
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -43,15 +44,141 @@
 
   <div class="container">
     <div class="row">
-      <div class = "u-max-full-width">
+      <div class="u-max-full-width">
         <h1 id="heading">Smart Rockets</h1>
       </div>
     </div>
+
+
     <div class="row">
       <div class="twelve columns">
         <div id="sketch-holder"></div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="u-max-full-width">
+        <h6 id="heading"><a href="https://github.com/shreyasdethe/smart-rockets">View the GitHub repository for this project</a></h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <h5 id="second-heading">Description</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <section>
+          The "rockets" here are objects that start out with random heading and velocity. They move for <code
+            id="coding">lifespan</code> timesteps with a velocity vector defined for every timestep. The first
+          generation appears to be random, but as generations go by, the rockets "learn" to go towards the goal,
+          coloured red, while avoiding the walls and the obstacle, coloured grey. This is done by an algorithm called
+          the 'Genetic Algorithm'.
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <h5 id="second-heading">How it works</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <section>
+          Each rocket is an instance of the class <code id="coding">Rocket</code> as shown.
+          <pre><code id="coding">
+            class Rocket{
+              constructor(dna)
+              update()
+              evaluate()
+              show()
+            }
+          </code></pre>
+          The <code id="coding">constructor(dna)</code> initializes the instance with a fixed width and height for
+          drawing, some booleans depicting its status, and a <code id="coding">dna</code> object, which is an Array of
+          length <code id="coding">lifespan</code> consisting of velocity vectors. It is created from random vectors if
+          <code id="coding">dna</code> is not passed while initializing the rocket.<br /><br />
+          The <code id="coding">show()</code> method is called every frame of animation. It calls the <code
+            id="coding">update()</code> method if the boolean <code id="coding">this.alive</code> is true. The rest of
+          the method is dedicated to drawing the rocket at its current position.<br /><br />
+          The <code id="coding">update()</code> method is used to update all the variables of the rocket instance such
+          as the position, alive status, reached status and hit-wall status. The position vector is calculated by adding
+          the velocity vector (obtained from the dna) to itself every time <code id="coding">update()</code> is called.
+          The alive status is set to false everytime the rocket either hits the wall or hits the obstacle. The reached
+          status is set to true when the rocket reaches the goal. It is only used for styling purposes, i,e, to make the
+          rocket change colour after reaching. <br /><br />
+          The <code id="coding">evaluate()</code> method is used to calculate the fitness of each rocket. It is called
+          everytime the generation is reset. The fitness is calculated as an inverse map of the distance of the rocket
+          from the goal. If the distance is large, the fitness will be low and if it is small, the fitness will be high.
+          he fitness will be capped to 0.1 if the rocket hits the wall or the obstacle, to discourage poor performers
+          from reproducing. The fitness is a variable of the <code id="coding">Rocket</code> class and is stored as
+          <code id="coding">this.fitness</code>.<br />
+          <hr>
+          Every generation of <code id="coding">n</code> number of rockets is an instance of the <code
+            id="coding">Generation</code> class, as shown.
+          <pre><code id="coding">
+            class Generation{
+              constructor()
+              update()
+              selection()
+              show()
+            }
+          </code></pre>
+          The <code id="coding">constructor()</code> is called automatically everytime a new instance of the class is
+          created. This method will create <code id="coding">n</code> number of rockets, create a new mating pool and
+          also create a new empty Array for the new generation.<br /><br />
+          The <code id="coding">update()</code> method of this class is called everytime the generation is reset, i.e.
+          everytime <code id="coding">lifespan</code> is reached. This method calls the <code
+            id="coding">evaluate()</code> method of every instane of the <code id="coding">Rocket</code> class it
+          created, finds the maximum fitness from it and stores it as the variable <code id="coding">maxfitness</code>.
+          The fitness of each rocket is then normalized by <code
+            id="coding">this.fitness = this.fitness / maxfitness</code>, so every individual fitness is a value between
+          0 and 1, excluding the former and including the latter.<br /><br />
+          Every time this method is called, the mating pool is cleared out. The rockets from the current generation are
+          pushed into the <code id="coding">this.matingpool[]</code> array according to their fitness. The number of
+          times a rocket is present in the mating pool is determined by <code
+            id="coding">this.rocket.fitness * mutation_rate * n</code>. This ensures that a rocket with a large value of
+          fitness is present in the mating pool a large number of times and hence its probability of reproducing will
+          increase.<br /><br />
+          Once the mating pool is created, the <code id="coding">selection()</code> method is called. This method is
+          used to perform the actual act of reproduction, in this case, DNA crossover. Two parents from the mating pool
+          are chosen randomly, and a new child DNA is produced by appending the DNA from the first parent upto an
+          arbitrary length, and the DNA from the second parent in the remaining child DNA. This is called crossover.
+          Thus a new generation of rockets is produced from the child DNA, which has DNA from the rockets of the
+          previous generation.<br /><br />
+          The rockets array of the <code id="coding">Generation</code> class is now replaced with the new rockets, and
+          the process is repeated several number of times.
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <h5 id="second-heading">Other stuff</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="twelve columns">
+        <section>
+          <ul>
+            <li>The goal and obstacle is created of random width and height on the screen using the <code
+                id="coding">createGoal()</code> and the <code id="coding">createObstacle()</code> functions. This way,
+              we can choose not to create and obstacle by simply not calling the createObstacle() function.</li>
+            <li>Variables <code id="coding">n</code>, <code id="coding">goalsize</code>, <code
+                id="coding">obstaclesize</code>, <code id="coding">lifespan</code>, and <code
+                id="coding">mutation_rate</code> are all global variables and can be changed to view different results.
+              Alternatively, they can be made to change while the sketch is running (using sliders or otherwise)
+              although any change will require the simulation to restart.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
   </div>
 
 

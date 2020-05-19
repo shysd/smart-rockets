@@ -499,26 +499,3 @@ there.
 /* Larger than Desktop HD */
 
 @media (min-width: 1200px) {}
-
-/* User-defined CSS
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-#sketch-holder {
-  text-align: center;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-body {
-  background-color: #151515;
-  /*Material design*/
-}
-
-#heading {
-  color: #BBBBBB;
-  opacity: 87%;
-  text-align: center;
-  padding-top: 10px;
-}

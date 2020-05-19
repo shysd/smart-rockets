@@ -50,7 +50,7 @@ class Generation{
 		// so that during selection the rocket which is more fit is
 		// more likely to be picked
 		for(var i = 0; i < n; i++){
-			var k = this.rockets[i].fitness * 20;		//arbitrary value
+			var k = this.rockets[i].fitness * mutation_rate * n;
 			for(var j = 0; j < k; j++){
 				this.matingpool.push(this.rockets[i]);
 			}
